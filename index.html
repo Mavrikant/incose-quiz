@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INCOSE ASEP/CSEP Practice Exam Simulator</title>
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="INCOSE Quiz">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDEV31NZ5J"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YDEV31NZ5J');</script>
 <script>try{if(localStorage.getItem('incose_quiz_darkmode')==='1')document.documentElement.classList.add('dark');}catch(e){}</script>
@@ -308,6 +316,73 @@ html.dark .modal-overlay{background:rgba(2,6,23,0.72);}
 html.dark .review-opt .r-exp{color:var(--navy-600);}
 html.dark .start-card{border:1px solid var(--navy-200);}
 html.dark .theme-fab{background:rgba(30,41,59,0.75);}
+
+/* ===== MODE / WRONG-ONLY / RESUME ===== */
+.seg{display:flex;background:var(--navy-100);border:1.5px solid var(--navy-200);border-radius:9px;padding:3px;gap:3px;}
+.seg-btn{flex:1;border:none;background:transparent;color:var(--navy-600);font-family:inherit;font-size:0.9rem;font-weight:600;padding:0.5rem 0.6rem;border-radius:6px;cursor:pointer;transition:all var(--transition);white-space:nowrap;}
+.seg-btn:hover{color:var(--navy-900);}
+.seg-btn.active{background:var(--surface);color:var(--accent-dark);box-shadow:var(--shadow-sm);}
+.seg-btn:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+.seg-btn small{font-weight:500;opacity:0.75;margin-left:0.15rem;}
+.mode-hint,.check-hint{font-size:0.78rem;color:var(--navy-400);margin-top:0.35rem;line-height:1.4;}
+.check-hint:empty{display:none;}
+.wrong-group{margin-bottom:1.2rem;}
+.check-row{display:flex;align-items:center;gap:0.55rem;padding:0.6rem 0.9rem;border:1.5px solid var(--navy-200);border-radius:8px;background:var(--navy-50);font-size:0.88rem;color:var(--navy-700);cursor:pointer;line-height:1.35;}
+.check-row input{width:16px;height:16px;accent-color:var(--accent);flex-shrink:0;cursor:pointer;}
+.check-row .cnt{margin-left:auto;font-size:0.75rem;font-weight:700;color:var(--red-dark);background:var(--red-light);padding:0.05rem 0.55rem;border-radius:10px;font-variant-numeric:tabular-nums;}
+.check-row.disabled{cursor:not-allowed;opacity:0.6;}
+.check-row.disabled input{cursor:not-allowed;}
+.check-row.disabled .cnt{color:var(--navy-400);background:var(--navy-100);}
+.form-group[hidden]{display:none;}
+.resume-card{border:1.5px solid var(--accent);background:var(--accent-light);border-radius:10px;padding:0.85rem 1rem;margin-bottom:1.3rem;}
+.resume-card[hidden]{display:none;}
+.resume-title{font-size:0.92rem;font-weight:700;color:var(--navy-900);}
+.resume-meta{font-size:0.82rem;color:var(--navy-600);margin-top:0.1rem;font-variant-numeric:tabular-nums;}
+.resume-actions{display:flex;gap:0.5rem;margin-top:0.7rem;}
+.resume-actions .btn{flex:1;padding:0.5rem 0.8rem;font-size:0.85rem;}
+
+/* ===== PRACTICE / PACE ===== */
+.q-head{display:flex;align-items:center;justify-content:space-between;gap:0.4rem 0.6rem;margin-bottom:0.6rem;flex-wrap:wrap;}
+.q-head .q-number{margin-bottom:0;}
+.pace{font-size:0.72rem;font-weight:700;padding:0.1rem 0.6rem;border-radius:10px;white-space:nowrap;font-variant-numeric:tabular-nums;border:1px solid transparent;line-height:1.5;}
+.pace[hidden]{display:none;}
+.pace.good{color:var(--green-dark);background:var(--green-light);border-color:rgba(34,197,94,0.35);}
+.pace.warn{color:#b45309;background:var(--amber-light);border-color:rgba(245,158,11,0.4);}
+.pace.bad{color:var(--red-dark);background:var(--red-light);border-color:rgba(239,68,68,0.35);}
+.pace.practice-tag{color:var(--accent-dark);background:var(--accent-light);border-color:rgba(59,130,246,0.35);text-transform:uppercase;letter-spacing:0.5px;font-size:0.66rem;}
+.timer.elapsed{color:#bfdbfe;}
+.opts-locked .option{cursor:default;}
+.opts-locked .option:not(.correct-answer):not(.wrong-answer){opacity:0.7;}
+.opts-locked .option:not(.correct-answer):not(.wrong-answer):hover{border-color:var(--navy-200);background:transparent;}
+.practice-fb{margin-top:0.8rem;padding:0.65rem 0.9rem;border-radius:8px;font-size:0.9rem;font-weight:600;}
+.practice-fb[hidden]{display:none;}
+.practice-fb.ok{background:var(--green-light);color:var(--green-dark);border-left:3px solid var(--green);}
+.practice-fb.bad{background:var(--red-light);color:var(--red-dark);border-left:3px solid var(--red);}
+.q-dot.p-bad{border-color:var(--red);background:var(--red-light);color:var(--red-dark);}
+
+/* ===== RESULTS: TOPIC BREAKDOWN / REVIEW FILTER ===== */
+.result-note{position:relative;font-size:0.85rem;opacity:0.85;margin-top:0.5rem;}
+.result-note:empty{display:none;}
+.review-filter{display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;margin-bottom:0.8rem;}
+.review-filter:empty{display:none;}
+.rf-lbl{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--navy-600);margin-right:0.2rem;}
+.chip{border:1.5px solid var(--navy-200);background:var(--surface);color:var(--navy-700);font-family:inherit;font-size:0.82rem;font-weight:600;padding:0.28rem 0.75rem;border-radius:16px;cursor:pointer;transition:all var(--transition);}
+.chip:hover{border-color:var(--navy-400);}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chip small{font-weight:500;opacity:0.8;margin-left:0.1rem;}
+.review-card[hidden]{display:none;}
+.flag-badge{display:inline-block;font-size:0.68rem;font-weight:600;background:var(--amber-light);color:#b45309;padding:0.05rem 0.5rem;border-radius:10px;margin-left:0.35rem;white-space:nowrap;vertical-align:1px;line-height:1.5;}
+.review-empty{text-align:center;color:var(--navy-400);font-size:0.88rem;padding:1.2rem;}
+.stats-seg{max-width:380px;margin:0 auto 0.6rem;background:var(--surface);}
+.stats-seg .seg-btn.active{background:var(--accent);color:#fff;}
+.stats-split{font-size:0.8rem;color:var(--navy-600);text-align:center;margin-bottom:1rem;}
+@media(max-width:420px){
+  .end-extra{display:none;}
+  .rf-lbl{width:100%;}
+}
+html.dark .pace.warn,html.dark .flag-badge{color:#fcd34d;}
+html.dark .timer.elapsed{color:#93c5fd;}
+html.dark .stats-seg .seg-btn.active{color:#fff;}
 </style>
 </head>
 <body>
@@ -322,6 +397,22 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         <span><span id="availCount">475</span> <span id="availWord">questions</span> available</span>
       </div>
+    </div>
+    <div class="resume-card" id="resumeCard" hidden role="region" aria-label="Unfinished session">
+      <div class="resume-title" id="resumeTitle"></div>
+      <div class="resume-meta" id="resumeMeta"></div>
+      <div class="resume-actions">
+        <button type="button" class="btn btn-primary" onclick="resumeSession()">Resume</button>
+        <button type="button" class="btn btn-outline" onclick="discardSession()">Discard</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label id="modeLabel">Mode</label>
+      <div class="seg" id="modeSeg" role="radiogroup" aria-labelledby="modeLabel" onkeydown="segKey(event)">
+        <button type="button" class="seg-btn active" data-mode="exam" role="radio" aria-checked="true" onclick="setMode('exam')">Exam</button>
+        <button type="button" class="seg-btn" data-mode="practice" role="radio" aria-checked="false" tabindex="-1" onclick="setMode('practice')">Practice</button>
+      </div>
+      <p class="mode-hint" id="modeHint">Timed. Answers and explanations are revealed at the end.</p>
     </div>
     <div class="form-group">
       <label for="numQuestions">Number of Questions</label>
@@ -341,8 +432,16 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
         <div class="topic-list" id="topicList"></div>
       </div>
     </div>
-    <div class="form-group">
-      <label>Time Limit (minutes)</label>
+    <div class="wrong-group">
+      <label class="check-row" id="wrongOnlyRow">
+        <input type="checkbox" id="wrongOnly" onchange="wrongOnlyWanted = this.checked; updatePool()">
+        <span>Only questions I got wrong</span>
+        <span class="cnt" id="wrongCount" title="Questions whose latest answer was wrong">0</span>
+      </label>
+      <p class="check-hint" id="wrongHint"></p>
+    </div>
+    <div class="form-group" id="timeLimitGroup">
+      <label for="timeLimit">Time Limit (minutes)</label>
       <input type="number" id="timeLimit" value="100" min="10" max="300" step="5">
     </div>
     <div class="form-group">
@@ -354,7 +453,7 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
     </div>
     <button class="btn btn-primary btn-start" id="startBtn" onclick="startExam()">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      Start Exam
+      <span id="startBtnLabel">Start Exam</span>
     </button>
     <p class="start-hint" id="startHint">No questions match the selected topics. Select at least one topic to start.</p>
     <div class="start-secondary">
@@ -380,7 +479,7 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
       <button type="button" class="icon-btn" onclick="showScreen('startScreen')" aria-label="Back to start" title="Back">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div><h1>Statistics</h1><p>Your progress across all completed exams</p></div>
+      <div><h1>Statistics</h1><p>Your progress across completed exams and practice sessions</p></div>
     </div>
   </div>
   <div class="page-body">
@@ -434,15 +533,20 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
         </div>
       </div>
       <button type="button" class="icon-btn theme-btn" onclick="toggleDark()" aria-label="Toggle dark mode"></button>
-      <button class="btn-end" onclick="finishExam()">End Exam</button>
+      <button class="btn-end" id="endBtn" onclick="finishExam()">End Exam</button>
     </div>
   </div>
   <div class="q-nav" id="qNav"></div>
   <div class="question-area">
     <div class="q-card">
-      <div class="q-number" id="qNumber">Question 1 of 100</div>
+      <div class="q-head">
+        <div class="q-number" id="qNumber">Question 1 of 100</div>
+        <span class="pace" id="paceBadge" hidden></span>
+        <span class="pace practice-tag" id="practiceTag" hidden>Practice</span>
+      </div>
       <div class="q-body" id="qBody"></div>
       <div id="optionsContainer"></div>
+      <div class="practice-fb" id="practiceFb" role="status" aria-live="polite" hidden></div>
       <div class="nav-buttons">
         <button class="btn btn-outline flag-btn" id="flagBtn" onclick="toggleFlag()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
@@ -463,11 +567,11 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
     <div class="modal-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     </div>
-    <div class="modal-title">End Exam?</div>
+    <div class="modal-title" id="confirmTitle">End Exam?</div>
     <p class="modal-msg" id="confirmMsg"></p>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeConfirmModal()">Cancel</button>
-      <button class="btn btn-danger" onclick="confirmFinish()">End Exam</button>
+      <button class="btn btn-danger" id="confirmOkBtn" onclick="confirmFinish()">End Exam</button>
     </div>
   </div>
 </div>
@@ -490,7 +594,8 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
 <!-- RESULT SCREEN -->
 <div class="result-screen" id="resultScreen">
   <div class="result-header">
-    <h1>Exam Results</h1>
+    <h1 id="resultTitle">Exam Results</h1>
+    <p class="result-note" id="resultNote"></p>
     <div class="score-circle" id="scoreCircle">
       <span class="pct" id="scorePercent">0%</span>
       <span class="lbl" id="scoreLabel">Score</span>
@@ -505,8 +610,10 @@ html.dark .theme-fab{background:rgba(30,41,59,0.75);}
   <div class="result-container">
     <div class="result-actions">
       <button class="btn btn-primary" onclick="reviewExam()">Review Answers</button>
-      <button class="btn btn-outline" onclick="location.reload()">New Exam</button>
+      <button class="btn btn-outline" id="newBtn" onclick="location.reload()">New Exam</button>
     </div>
+    <div class="panel" id="topicBreak"></div>
+    <div class="review-filter" id="reviewFilter" role="group" aria-label="Filter review list"></div>
     <div id="reviewContainer"></div>
   </div>
 </div>
@@ -519,13 +626,21 @@ let currentQ = 0, timerInterval, startTime, timeLimit;
 
 let examFinished = false;
 const HIST_KEY = 'incose_quiz_history', STATS_KEY = 'incose_quiz_stats', DARK_KEY = 'incose_quiz_darkmode';
+const SESSION_KEY = 'incose_quiz_session', MODE_KEY = 'incose_quiz_mode';
+let examMode = 'exam';      // mode of the running (or last) session
+let selectedMode = 'exam';  // mode picked on the start screen
+let timerTicks = 0, resumeTicker = null, reviewFilter = 'all', statsView = 'exam';
+let wrongOnlyWanted = false; // user's wish, kept even while the checkbox is disabled
+// Session ownership: only the tab that started/resumed a session may write or submit it.
+const TAB_ID = Math.random().toString(36).slice(2) + Date.now().toString(36);
+let ownsSession = false, sessionWritten = false, claimPending = false;
 
 /* ===== STORAGE (all access guarded) ===== */
 function readJSON(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
 }
 function writeJSON(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+  try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; }
 }
 function loadHistory() {
   const h = readJSON(HIST_KEY, {});
@@ -580,13 +695,44 @@ function toggleTopicPanel() {
   const open = f.classList.toggle('open');
   f.querySelector('.topic-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
 }
-function filteredPool() {
+// "Currently wrong": answered wrong at least once and the latest attempt was wrong
+// (entries recorded before the l field existed fall back to w > c).
+function isCurrentlyWrong(h) {
+  if (!h || !((+h.w || 0) > 0)) return false;
+  if (h.l === 0 || h.l === 1) return h.l === 0;
+  return (+h.w || 0) > (+h.c || 0);
+}
+function topicPool() {
   const p = [];
   for (let i = 0; i < ALL_QUESTIONS.length; i++) if (selectedTopics.has(Q_TOPICS[i])) p.push(i);
   return p;
 }
+function wrongOnlyOn() {
+  const cb = document.getElementById('wrongOnly');
+  return !!(cb && cb.checked && !cb.disabled);
+}
+function filteredPool() {
+  const p = topicPool();
+  if (!wrongOnlyOn()) return p;
+  const hist = loadHistory();
+  return p.filter(i => isCurrentlyWrong(hist[i]));
+}
 function updatePool() {
-  const n = filteredPool().length;
+  const hist = loadHistory();
+  const tp = topicPool();
+  const wrongN = tp.filter(i => isCurrentlyWrong(hist[i])).length;
+  const anyWrong = wrongN > 0 || Object.keys(hist).some(k => isCurrentlyWrong(hist[k]));
+  const cb = document.getElementById('wrongOnly');
+  cb.disabled = wrongN === 0;
+  cb.checked = wrongN > 0 && wrongOnlyWanted;
+  document.getElementById('wrongOnlyRow').classList.toggle('disabled', wrongN === 0);
+  document.getElementById('wrongCount').textContent = wrongN;
+  const filtered = selectedTopics.size < TOPICS.length;
+  document.getElementById('wrongHint').textContent = wrongN > 0
+    ? (cb.checked ? `Using the ${wrongN} question${wrongN === 1 ? '' : 's'} whose latest answer was wrong${filtered ? ' (selected topics)' : ''}.` : '')
+    : (anyWrong ? 'No currently-wrong questions in the selected topics.' : 'Nothing here yet. Questions you answer wrong will be collected here.');
+
+  const n = cb.checked ? wrongN : tp.length;
   document.getElementById('availCount').textContent = n;
   document.getElementById('availWord').textContent = n === 1 ? 'question' : 'questions';
   const inp = document.getElementById('numQuestions');
@@ -597,6 +743,148 @@ function updatePool() {
   document.getElementById('startHint').style.display = n === 0 ? 'block' : 'none';
   document.getElementById('topicSummary').textContent =
     selectedTopics.size === TOPICS.length ? 'All topics' : `${selectedTopics.size} of ${TOPICS.length} selected`;
+}
+
+/* ===== MODE SELECTOR ===== */
+function setMode(m, noSave) {
+  selectedMode = m === 'practice' ? 'practice' : 'exam';
+  if (!noSave) { try { localStorage.setItem(MODE_KEY, selectedMode); } catch (e) {} }
+  document.querySelectorAll('#modeSeg .seg-btn').forEach(b => {
+    const on = b.dataset.mode === selectedMode;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-checked', on ? 'true' : 'false');
+    b.tabIndex = on ? 0 : -1;
+  });
+  const practice = selectedMode === 'practice';
+  document.getElementById('timeLimitGroup').hidden = practice;
+  document.getElementById('timeLimit').disabled = practice;
+  document.getElementById('modeHint').textContent = practice
+    ? 'Untimed. See the correct answer and explanation right after each question.'
+    : 'Timed. Answers and explanations are revealed at the end.';
+  document.getElementById('startBtnLabel').textContent = practice ? 'Start Practice' : 'Start Exam';
+}
+function segKey(e) {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+  e.preventDefault();
+  setMode(selectedMode === 'exam' ? 'practice' : 'exam');
+  const b = document.querySelector(`#modeSeg .seg-btn[data-mode="${selectedMode}"]`);
+  if (b) b.focus();
+}
+
+/* ===== SESSION PERSISTENCE (resume) ===== */
+function pad2(v) { return String(v).padStart(2, '0'); }
+function fmtClock(sec) {
+  sec = Math.max(0, Math.floor(sec));
+  return `${pad2(Math.floor(sec / 3600))}:${pad2(Math.floor((sec % 3600) / 60))}:${pad2(sec % 60)}`;
+}
+function fmtShort(sec) {
+  sec = Math.max(0, Math.floor(sec));
+  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  return h ? `${h}:${pad2(m)}:${pad2(s)}` : `${pad2(m)}:${pad2(s)}`;
+}
+function elapsedSec() { return Math.max(0, Math.floor((Date.now() - startTime) / 1000)); }
+// True when another tab took the session over, or finished/discarded it after we wrote it.
+function sessionLostElsewhere() {
+  if (!ownsSession) return true;
+  // Right after claiming, the stored session may still carry the previous page's owner id.
+  if (claimPending) return false;
+  const cur = readJSON(SESSION_KEY, null);
+  if (cur ? (cur.owner && cur.owner !== TAB_ID) : sessionWritten) { ownsSession = false; return true; }
+  return false;
+}
+function saveSession() {
+  if (examFinished || !exam.length) return;
+  if (sessionLostElsewhere()) { stopStaleTab(); return; }
+  if (writeJSON(SESSION_KEY, {
+    v: 1, owner: TAB_ID, mode: examMode, examIdx: exam.map(q => q.origIdx), userAnswers, flags, currentQ,
+    timeLimit, startTime, elapsed: elapsedSec(), savedAt: Date.now()
+  })) { sessionWritten = true; claimPending = false; }
+}
+function claimSession() { ownsSession = true; sessionWritten = false; claimPending = true; }
+function clearSession() { try { localStorage.removeItem(SESSION_KEY); } catch (e) {} ownsSession = false; sessionWritten = false; claimPending = false; }
+function stopStaleTab() {
+  examFinished = true;
+  clearInterval(timerInterval);
+  ownsSession = false;
+  showAppConfirm('Session Continued Elsewhere', 'This session was finished, discarded or resumed in another tab or window.', 'OK', () => location.reload());
+}
+function loadSession() {
+  const s = readJSON(SESSION_KEY, null);
+  if (!s || typeof s !== 'object' || !Array.isArray(s.examIdx) || !s.examIdx.length) return null;
+  const n = s.examIdx.length;
+  if (!s.examIdx.every(i => Number.isInteger(i) && i >= 0 && i < ALL_QUESTIONS.length)) return null;
+  const mode = s.mode === 'practice' ? 'practice' : 'exam';
+  const ua = s.examIdx.map((qi, k) => {
+    const v = Array.isArray(s.userAnswers) ? s.userAnswers[k] : -1;
+    return Number.isInteger(v) && v >= 0 && v < (ALL_QUESTIONS[qi].answers || []).length ? v : -1;
+  });
+  const fl = s.examIdx.map((_, k) => !!(Array.isArray(s.flags) && s.flags[k]));
+  const cq = Number.isInteger(s.currentQ) && s.currentQ >= 0 && s.currentQ < n ? s.currentQ : 0;
+  const tl = Number.isFinite(+s.timeLimit) && +s.timeLimit > 0 ? +s.timeLimit : 0;
+  const st = +s.startTime;
+  if (mode === 'exam' && (!tl || !Number.isFinite(st) || st <= 0)) return null;
+  return { mode, examIdx: s.examIdx.slice(), userAnswers: ua, flags: fl, currentQ: cq, timeLimit: tl, startTime: st, elapsed: Math.max(0, +s.elapsed || 0) };
+}
+function sessionRemaining(s) { return s.timeLimit - Math.floor((Date.now() - s.startTime) / 1000); }
+function sessionSummary(s) {
+  const answered = s.userAnswers.filter(a => a >= 0).length;
+  const what = s.mode === 'practice' ? 'practice session' : 'exam';
+  const time = s.mode === 'practice' ? fmtShort(s.elapsed) + ' elapsed' : fmtShort(Math.max(0, sessionRemaining(s))) + ' left';
+  return { what, text: `${answered}/${s.examIdx.length} answered, ${time}` };
+}
+function renderResumeCard() {
+  clearInterval(resumeTicker); resumeTicker = null;
+  const card = document.getElementById('resumeCard');
+  const s = loadSession();
+  if (!s) { card.hidden = true; return; }
+  if (s.mode === 'exam' && sessionRemaining(s) <= 0) { card.hidden = true; finishExpiredSession(s); return; }
+  const paint = () => {
+    const sum = sessionSummary(s);
+    document.getElementById('resumeTitle').textContent = `You have an unfinished ${sum.what}`;
+    document.getElementById('resumeMeta').textContent = sum.text;
+  };
+  paint();
+  card.hidden = false;
+  if (s.mode === 'exam') {
+    resumeTicker = setInterval(() => {
+      if (document.getElementById('startScreen').style.display === 'none') return;
+      if (sessionRemaining(s) <= 0) renderResumeCard(); else paint();
+    }, 1000);
+  }
+}
+function applySession(s) {
+  exam = s.examIdx.map(i => ({ ...ALL_QUESTIONS[i], origIdx: i, topic: Q_TOPICS[i] }));
+  userAnswers = s.userAnswers.slice();
+  flags = s.flags.slice();
+  currentQ = s.currentQ;
+  examMode = s.mode;
+  timeLimit = s.timeLimit;
+  examFinished = false;
+}
+function finishExpiredSession(s) {
+  applySession(s);
+  startTime = s.startTime;
+  claimSession();
+  doFinishExam('Time ran out while you were away, so your exam was submitted automatically.', true);
+}
+function resumeSession() {
+  const s = loadSession();
+  if (!s) { renderResumeCard(); return; }
+  if (s.mode === 'exam' && sessionRemaining(s) <= 0) { finishExpiredSession(s); return; }
+  applySession(s);
+  claimSession();
+  enterExamScreen();
+  // Exams keep running on the wall clock; practice time pauses while the page is closed.
+  startTimer(s.mode === 'exam' ? s.startTime : Date.now() - s.elapsed * 1000);
+  saveSession();
+}
+function discardSession() {
+  const s = loadSession();
+  if (!s) { renderResumeCard(); return; }
+  const sum = sessionSummary(s);
+  showAppConfirm('Discard ' + (s.mode === 'practice' ? 'Practice Session' : 'Exam') + '?',
+    `Your unfinished ${sum.what} (${sum.text}) will be deleted. This cannot be undone.`,
+    'Discard', () => { clearSession(); renderResumeCard(); });
 }
 
 /* ===== SPACED REPETITION ===== */
@@ -625,13 +913,28 @@ function showScreen(id) {
     document.getElementById(s).style.display = s === id ? (s === 'startScreen' ? 'flex' : 'block') : 'none';
   });
   window.scrollTo(0, 0);
+  if (id === 'startScreen') { updatePool(); renderResumeCard(); }
 }
 
 function startExam() {
+  if (!filteredPool().length) { updatePool(); return; }
+  const s = loadSession();
+  if (s) {
+    const sum = sessionSummary(s);
+    showAppConfirm('Replace Unfinished Session?',
+      `You have an unfinished ${sum.what} (${sum.text}). Starting a new ${selectedMode === 'practice' ? 'practice session' : 'exam'} will discard it.`,
+      'Start New', beginExam);
+    return;
+  }
+  beginExam();
+}
+
+function beginExam() {
   const poolIdx = filteredPool();
   if (!poolIdx.length) { updatePool(); return; }
+  examMode = selectedMode;
   const n = Math.max(1, Math.min(parseInt(document.getElementById('numQuestions').value) || 80, poolIdx.length));
-  timeLimit = (parseInt(document.getElementById('timeLimit').value) || 90) * 60;
+  timeLimit = examMode === 'practice' ? 0 : (parseInt(document.getElementById('timeLimit').value) || 90) * 60;
   const order = document.getElementById('orderSelect').value;
 
   const chosen = order === 'random' ? weightedSample(poolIdx, n) : poolIdx.slice(0, n);
@@ -641,14 +944,24 @@ function startExam() {
   currentQ = 0;
   examFinished = false;
 
-  ['startScreen', 'statsScreen', 'browseScreen'].forEach(s => { document.getElementById(s).style.display = 'none'; });
+  claimSession();
+  enterExamScreen();
+  startTimer();
+  saveSession();
+}
+
+function enterExamScreen() {
+  clearInterval(resumeTicker); resumeTicker = null;
+  ['startScreen', 'statsScreen', 'browseScreen', 'resultScreen'].forEach(s => { document.getElementById(s).style.display = 'none'; });
   document.body.classList.add('in-exam');
   document.getElementById('examScreen').style.display = 'block';
   window.scrollTo(0, 0);
-
+  const practice = examMode === 'practice';
+  document.getElementById('endBtn').innerHTML = practice ? 'Finish<span class="end-extra"> Practice</span>' : 'End Exam';
+  document.getElementById('practiceTag').hidden = !practice;
+  document.getElementById('paceBadge').hidden = practice;
   buildNav();
   renderQ();
-  startTimer();
 }
 
 function buildNav() {
@@ -668,7 +981,10 @@ function updateNav() {
   dots.forEach((d, i) => {
     d.className = 'q-dot';
     if (i === currentQ) d.classList.add('current');
-    if (userAnswers[i] >= 0) d.classList.add('answered');
+    if (userAnswers[i] >= 0) {
+      d.classList.add('answered');
+      if (examMode === 'practice' && !(exam[i].answers[userAnswers[i]] || {}).correct) d.classList.add('p-bad');
+    }
     if (flags[i]) d.classList.add('flagged');
   });
 }
@@ -679,15 +995,37 @@ function renderQ() {
   document.getElementById('progressText').innerHTML = `<strong>${currentQ+1}</strong> / ${exam.length}`;
   document.getElementById('qBody').textContent = q.question;
 
+  const ua = userAnswers[currentQ];
+  const reveal = examMode === 'practice' && ua >= 0;
   const container = document.getElementById('optionsContainer');
   container.innerHTML = '';
+  container.classList.toggle('opts-locked', reveal);
   q.answers.forEach((a, i) => {
     const opt = document.createElement('div');
-    opt.className = 'option' + (userAnswers[currentQ] === i ? ' selected' : '');
-    opt.innerHTML = `<div class="radio"></div><span class="letter">${letters[i]})</span><span class="option-text">${escH(a.text)}</span>`;
-    opt.onclick = () => selectAnswer(i);
+    let cls = 'option' + (ua === i ? ' selected' : '');
+    let exp = '';
+    if (reveal) {
+      if (a.correct) cls += ' correct-answer';
+      else if (i === ua) cls += ' wrong-answer';
+      if ((a.correct || i === ua) && a.explanation) exp = `<div class="explanation-box">${escH(a.explanation)}</div>`;
+    }
+    opt.className = cls;
+    opt.innerHTML = `<div class="radio"></div><span class="letter">${letters[i]})</span><div class="option-text">${escH(a.text)}${exp}</div>`;
+    if (!reveal) opt.onclick = () => selectAnswer(i);
     container.appendChild(opt);
   });
+
+  const pf = document.getElementById('practiceFb');
+  if (reveal) {
+    const ok = !!(q.answers[ua] && q.answers[ua].correct);
+    const right = q.answers.map((a, j) => a.correct ? letters[j] : null).filter(Boolean);
+    pf.className = 'practice-fb ' + (ok ? 'ok' : 'bad');
+    pf.textContent = ok ? 'Correct!' : `Incorrect. The correct answer is ${right.join(', ') || 'not available'}.`;
+    pf.hidden = false;
+  } else {
+    pf.hidden = true;
+    pf.textContent = '';
+  }
 
   const fb = document.getElementById('flagBtn');
   fb.className = 'btn btn-outline flag-btn' + (flags[currentQ] ? ' flagged' : '');
@@ -698,8 +1036,12 @@ function renderQ() {
 }
 
 function selectAnswer(i) {
+  if (examFinished) return;
+  if (examMode === 'practice' && userAnswers[currentQ] >= 0) return; // practice answers lock
   userAnswers[currentQ] = i;
   renderQ();
+  updatePace();
+  saveSession();
 }
 
 function goTo(i) {
@@ -708,29 +1050,59 @@ function goTo(i) {
   currentQ = i;
   renderQ();
   window.scrollTo(0, 0);
+  saveSession();
 }
 
 function toggleFlag() {
   flags[currentQ] = !flags[currentQ];
   renderQ();
+  saveSession();
 }
 
-function startTimer() {
-  startTime = Date.now();
-  updateTimer();
+function startTimer(st) {
+  clearInterval(timerInterval);
+  startTime = st || Date.now();
+  timerTicks = 0;
   timerInterval = setInterval(updateTimer, 1000);
+  updateTimer();
 }
 
 function updateTimer() {
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const remaining = Math.max(0, timeLimit - elapsed);
-  const h = Math.floor(remaining / 3600);
-  const m = Math.floor((remaining % 3600) / 60);
-  const s = remaining % 60;
+  if (examFinished) { clearInterval(timerInterval); return; }
+  const elapsed = elapsedSec();
   const el = document.getElementById('timer');
-  el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  el.className = 'timer' + (remaining < 300 ? ' danger' : remaining < 600 ? ' warning' : '');
-  if (remaining <= 0) { closeConfirmModal(); doFinishExam(); }
+  if (examMode === 'practice') {
+    el.textContent = fmtClock(elapsed);
+    el.className = 'timer elapsed';
+    el.title = 'Elapsed time';
+  } else {
+    const remaining = Math.max(0, timeLimit - elapsed);
+    el.textContent = fmtClock(remaining);
+    el.className = 'timer' + (remaining < 300 ? ' danger' : remaining < 600 ? ' warning' : '');
+    el.title = 'Time remaining';
+    if (remaining <= 0) { closeConfirmModal(); doFinishExam(); return; }
+  }
+  updatePace(elapsed);
+  if (++timerTicks % 5 === 0) saveSession();
+}
+
+// Exam mode only: answered count vs. the count expected at an even pace.
+function updatePace(elapsed) {
+  const el = document.getElementById('paceBadge');
+  if (examMode !== 'exam' || !timeLimit || !exam.length) { el.hidden = true; return; }
+  if (elapsed == null) elapsed = elapsedSec();
+  const answered = userAnswers.filter(a => a >= 0).length;
+  const expected = exam.length * Math.min(1, elapsed / timeLimit);
+  const d = answered - expected;
+  const tol = Math.max(2, Math.round(exam.length * 0.05));
+  let txt, cls;
+  if (d >= 1) { txt = '+' + Math.round(d) + ' ahead'; cls = 'good'; }
+  else if (d > -1) { txt = 'On pace'; cls = 'good'; }
+  else { const b = Math.round(-d); txt = b + ' behind'; cls = b <= tol ? 'warn' : 'bad'; }
+  el.textContent = txt;
+  el.className = 'pace ' + cls;
+  el.title = `${answered} answered; about ${Math.round(expected)} expected by now at an even pace`;
+  el.hidden = false;
 }
 
 function closeConfirmModal() {
@@ -744,21 +1116,30 @@ function confirmFinish() {
 
 function finishExam() {
   const unanswered = userAnswers.filter(a => a < 0).length;
+  const practice = examMode === 'practice';
   if (unanswered > 0) {
-    document.getElementById('confirmMsg').textContent = 'You have ' + unanswered + ' unanswered question' + (unanswered > 1 ? 's' : '') + '. Are you sure you want to end the exam?';
+    document.getElementById('confirmTitle').textContent = practice ? 'Finish Practice?' : 'End Exam?';
+    document.getElementById('confirmOkBtn').textContent = practice ? 'Finish' : 'End Exam';
+    document.getElementById('confirmMsg').textContent = 'You have ' + unanswered + ' unanswered question' + (unanswered > 1 ? 's' : '') +
+      '. Are you sure you want to ' + (practice ? 'finish this practice session?' : 'end the exam?');
     document.getElementById('confirmModal').style.display = 'flex';
     return;
   }
   doFinishExam();
 }
 
-function doFinishExam() {
+function doFinishExam(note, expiredSession) {
   if (examFinished) return;
+  // A tab whose session was finished or taken over elsewhere must not record it again.
+  if (!expiredSession && sessionLostElsewhere()) { stopStaleTab(); return; }
   examFinished = true;
   clearInterval(timerInterval);
+  clearSession();
   closeKbdTip();
   document.body.classList.remove('in-exam');
-  const elapsed = Math.min(Math.floor((Date.now() - startTime) / 1000), timeLimit);
+  const practice = examMode === 'practice';
+  const rawElapsed = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+  const elapsed = practice ? rawElapsed : Math.min(rawElapsed, timeLimit);
 
   let correct = 0, wrong = 0, skipped = 0;
   exam.forEach((q, i) => {
@@ -770,10 +1151,13 @@ function doFinishExam() {
   const pct = Math.round((correct / exam.length) * 100);
   const pass = pct >= 70;
 
-  document.getElementById('examScreen').style.display = 'none';
+  ['startScreen', 'statsScreen', 'browseScreen', 'examScreen'].forEach(s => { document.getElementById(s).style.display = 'none'; });
   const rs = document.getElementById('resultScreen');
   rs.style.display = 'block';
 
+  document.getElementById('resultTitle').textContent = practice ? 'Practice Results' : 'Exam Results';
+  document.getElementById('resultNote').textContent = typeof note === 'string' ? note : '';
+  document.getElementById('newBtn').textContent = practice ? 'New Practice' : 'New Exam';
   const sc = document.getElementById('scoreCircle');
   sc.className = 'score-circle ' + (pass ? 'pass' : 'fail');
   document.getElementById('scorePercent').textContent = pct + '%';
@@ -785,7 +1169,9 @@ function doFinishExam() {
   document.getElementById('rTime').textContent = `${String(em).padStart(2,'0')}:${String(es).padStart(2,'0')}`;
 
   recordResults(correct, wrong, skipped, pct, elapsed);
+  buildTopicBreakdown();
   buildReview();
+  setReviewFilter('all');
   window.scrollTo(0, 0);
 }
 
@@ -797,26 +1183,52 @@ function recordResults(correct, wrong, skipped, pct, elapsed) {
     if (ua < 0) return; // skipped questions are not counted
     const ok = !!(q.answers[ua] && q.answers[ua].correct);
     const prev = hist[q.origIdx] || {};
-    hist[q.origIdx] = { c: (+prev.c || 0) + (ok ? 1 : 0), w: (+prev.w || 0) + (ok ? 0 : 1) };
+    // l = latest attempt (1 correct / 0 wrong), used by "Only questions I got wrong"
+    hist[q.origIdx] = { c: (+prev.c || 0) + (ok ? 1 : 0), w: (+prev.w || 0) + (ok ? 0 : 1), l: ok ? 1 : 0 };
     const t = topics[q.topic] || (topics[q.topic] = { c: 0, t: 0 });
     t.t++;
     if (ok) t.c++;
   });
   writeJSON(HIST_KEY, hist);
   const stats = loadStats();
-  stats.push({ date: new Date().toISOString(), score: pct, correct, wrong, skipped, totalQ: exam.length, timeUsed: elapsed, topics });
+  stats.push({ date: new Date().toISOString(), mode: examMode, score: pct, correct, wrong, skipped, totalQ: exam.length, timeUsed: elapsed, topics });
   writeJSON(STATS_KEY, stats);
+}
+
+function buildTopicBreakdown() {
+  const agg = {};
+  exam.forEach((q, i) => {
+    const k = q.topic || Q_TOPICS[q.origIdx] || 'General';
+    const a = agg[k] || (agg[k] = { c: 0, t: 0 });
+    a.t++;
+    const ua = userAnswers[i];
+    if (ua >= 0 && q.answers[ua]?.correct) a.c++;
+  });
+  const rows = Object.keys(agg)
+    .map(k => ({ k, c: agg[k].c, t: agg[k].t, p: Math.round(agg[k].c / agg[k].t * 100) }))
+    .sort((a, b) => a.p - b.p || b.t - a.t || a.k.localeCompare(b.k));
+  document.getElementById('topicBreak').innerHTML =
+    `<h2>By Topic</h2><p class="panel-note">Correct answers per topic in this ${examMode === 'practice' ? 'session' : 'exam'}, weakest first (skipped count as incorrect)</p>` +
+    rows.map(r => {
+      const col = r.p >= 70 ? 'var(--green)' : r.p >= 50 ? 'var(--amber)' : 'var(--red)';
+      return `<div class="weak-row"><div class="weak-top"><span>${escH(r.k)}</span><span class="pct" style="color:${col}">${r.p}% <small>(${r.c}/${r.t})</small></span></div>
+        <div class="weak-bar"><span style="width:${Math.max(r.p, 1)}%;background:${col}"></span></div></div>`;
+    }).join('');
 }
 
 function buildReview() {
   const c = document.getElementById('reviewContainer');
   c.innerHTML = '';
+  const counts = { all: exam.length, wrong: 0, skip: 0, flag: 0 };
   exam.forEach((q, i) => {
     const ua = userAnswers[i];
     const isCorrect = ua >= 0 && q.answers[ua]?.correct;
     const isSkip = ua < 0;
     const icon = isCorrect ? 'ok' : isSkip ? 'skip' : 'wrong';
     const iconText = isCorrect ? '&#10003;' : isSkip ? '&mdash;' : '&#10007;';
+    if (icon === 'wrong') counts.wrong++;
+    if (isSkip) counts.skip++;
+    if (flags[i]) counts.flag++;
 
     let detailHtml = '';
     q.answers.forEach((a, j) => {
@@ -830,19 +1242,50 @@ function buildReview() {
 
     const card = document.createElement('div');
     card.className = 'review-card';
+    card.dataset.status = icon;
+    card.dataset.flag = flags[i] ? '1' : '0';
     card.innerHTML = `
       <div class="review-header" onclick="this.closest('.review-card').classList.toggle('open')">
         <div class="review-icon ${icon}">${iconText}</div>
-        <div class="review-body"><strong>${i+1}.</strong> ${escH(q.question)} <span class="topic-badge">${escH(q.topic || Q_TOPICS[q.origIdx] || 'General')}</span></div>
+        <div class="review-body"><strong>${i+1}.</strong> ${escH(q.question)} <span class="topic-badge">${escH(q.topic || Q_TOPICS[q.origIdx] || 'General')}</span>${flags[i] ? '<span class="flag-badge">Flagged</span>' : ''}</div>
         <span class="toggle-rv">&#9660;</span>
       </div>
       <div class="review-detail">${detailHtml}</div>`;
     c.appendChild(card);
   });
+  const empty = document.createElement('div');
+  empty.className = 'review-empty';
+  empty.id = 'reviewEmpty';
+  empty.hidden = true;
+  c.appendChild(empty);
+  document.getElementById('reviewFilter').innerHTML = '<span class="rf-lbl">Show:</span>' +
+    [['all', 'All', counts.all], ['wrong', 'Wrong', counts.wrong], ['skip', 'Skipped', counts.skip], ['flag', 'Flagged', counts.flag]]
+      .map(([k, l, n]) => `<button type="button" class="chip" data-f="${k}" aria-pressed="false" onclick="setReviewFilter('${k}')">${l} <small>${n}</small></button>`).join('');
+}
+
+function setReviewFilter(f) {
+  reviewFilter = f;
+  document.querySelectorAll('#reviewFilter .chip').forEach(b => {
+    const on = b.dataset.f === f;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  let shown = 0;
+  document.querySelectorAll('#reviewContainer .review-card').forEach(card => {
+    const vis = f === 'all' || (f === 'wrong' && card.dataset.status === 'wrong') ||
+      (f === 'skip' && card.dataset.status === 'skip') || (f === 'flag' && card.dataset.flag === '1');
+    card.hidden = !vis;
+    if (vis) shown++;
+  });
+  const empty = document.getElementById('reviewEmpty');
+  if (empty) {
+    empty.textContent = { wrong: 'No wrong answers in this session.', skip: 'No skipped questions.', flag: 'No flagged questions.' }[f] || 'Nothing to show.';
+    empty.hidden = shown > 0;
+  }
 }
 
 function reviewExam() {
-  document.getElementById('reviewContainer').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('reviewFilter').scrollIntoView({ behavior: 'smooth' });
 }
 
 function escH(s) {
@@ -875,14 +1318,29 @@ function showStats() {
   renderStats();
   showScreen('statsScreen');
 }
+function setStatsView(v) { statsView = v; renderStats(); }
 function renderStats() {
-  const s = loadStats();
+  const all = loadStats();
   const el = document.getElementById('statsContent');
-  if (!s.length) {
+  if (!all.length) {
     el.innerHTML = `<div class="panel empty-state">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       <h3>No exams yet</h3>
       <p>Complete an exam to see your scores and weakest topics here.</p></div>`;
+    return;
+  }
+  // Entries saved before modes existed have no mode field: they are exams.
+  const isPractice = x => x.mode === 'practice';
+  const examN = all.filter(x => !isPractice(x)).length, pracN = all.length - examN;
+  const s = statsView === 'all' ? all : all.filter(x => statsView === 'practice' ? isPractice(x) : !isPractice(x));
+  const noun = statsView === 'exam' ? 'Exam' : statsView === 'practice' ? 'Practice Session' : 'Session';
+  const seg = `<div class="seg stats-seg" role="radiogroup" aria-label="Sessions to include">` +
+    [['exam', 'Exams', examN], ['practice', 'Practice', pracN], ['all', 'All', all.length]].map(([k, l, n]) =>
+      `<button type="button" class="seg-btn${statsView === k ? ' active' : ''}" role="radio" aria-checked="${statsView === k}" onclick="setStatsView('${k}')">${l} <small>${n}</small></button>`).join('') + '</div>';
+  const split = `<p class="stats-split">${examN} exam${examN === 1 ? '' : 's'} &middot; ${pracN} practice session${pracN === 1 ? '' : 's'}${statsView === 'exam' && pracN ? ' (practice not included below)' : ''}</p>`;
+  if (!s.length) {
+    el.innerHTML = seg + split + `<div class="panel empty-state"><h3>No ${statsView === 'practice' ? 'practice sessions' : 'exams'} yet</h3>
+      <p>Finish ${statsView === 'practice' ? 'a practice session' : 'an exam'} to see results in this view.</p></div>`;
     return;
   }
   const scores = s.map(x => Math.max(0, Math.min(100, +x.score || 0)));
@@ -891,7 +1349,7 @@ function renderStats() {
   const last = s.slice(-10);
   const offset = s.length - last.length;
 
-  // Aggregate topic performance across all exams
+  // Aggregate topic performance across the sessions in view
   const agg = {};
   s.forEach(x => {
     const tp = x.topics || {};
@@ -913,21 +1371,22 @@ function renderStats() {
       <div class="weak-bar"><span style="width:${Math.max(p, 1)}%;background:${col}"></span></div></div>`;
   }).join('') : '<p class="panel-note" style="margin:0">No answered questions recorded yet.</p>';
 
-  el.innerHTML = `
+  const plural = s.length > 1 ? 's' : '';
+  el.innerHTML = seg + split + `
     <div class="stat-tiles">
-      <div class="stat-tile"><div class="val">${s.length}</div><div class="lbl">Exams</div></div>
+      <div class="stat-tile"><div class="val">${s.length}</div><div class="lbl">${statsView === 'exam' ? 'Exams' : statsView === 'practice' ? 'Practice' : 'Sessions'}</div></div>
       <div class="stat-tile"><div class="val" style="color:${avg >= 70 ? 'var(--green)' : 'var(--red)'}">${avg}%</div><div class="lbl">Average</div></div>
       <div class="stat-tile"><div class="val" style="color:${best >= 70 ? 'var(--green)' : 'var(--red)'}">${best}%</div><div class="lbl">Best</div></div>
     </div>
-    <div class="panel"><h2>Last ${last.length} Exam${last.length > 1 ? 's' : ''}</h2>${buildScoreChart(last, offset)}</div>
-    <div class="panel"><h2>Weak Topics</h2><p class="panel-note">Sorted by error rate across all exams (skipped questions excluded)</p>${weakHtml}</div>`;
+    <div class="panel"><h2>Last ${last.length} ${noun}${last.length > 1 ? 's' : ''}</h2>${statsView === 'all' ? '<p class="panel-note">Practice sessions are shown lighter</p>' : ''}${buildScoreChart(last, offset)}</div>
+    <div class="panel"><h2>Weak Topics</h2><p class="panel-note">Sorted by error rate across ${s.length} ${noun.toLowerCase()}${plural} (skipped questions excluded)</p>${weakHtml}</div>`;
 }
 function buildScoreChart(list, offset) {
   const W = 420, H = 210, pl = 38, pr = 10, pt = 20, pb = 28;
   const cw = W - pl - pr, ch = H - pt - pb;
   const slot = cw / 10, bw = Math.min(26, slot * 0.62);
   const yOf = v => pt + ch * (1 - v / 100);
-  let svg = `<svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Scores of the last ${list.length} exams">`;
+  let svg = `<svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Scores of the last ${list.length} sessions">`;
   [0, 50, 100].forEach(v => {
     svg += `<line class="c-grid" x1="${pl}" x2="${W - pr}" y1="${yOf(v)}" y2="${yOf(v)}"/><text class="c-lbl" x="${pl - 6}" y="${yOf(v) + 4}" text-anchor="end">${v}%</text>`;
   });
@@ -937,7 +1396,8 @@ function buildScoreChart(list, offset) {
     const cx = pl + slot * i + slot / 2, y = pt + ch - h;
     const d = new Date(x.date);
     const ds = isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    svg += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${sc >= 70 ? 'var(--green)' : 'var(--red)'}"><title>Exam #${offset + i + 1}${ds ? ' (' + ds + ')' : ''}: ${sc}%</title></rect>`;
+    const pr2 = x.mode === 'practice';
+    svg += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${sc >= 70 ? 'var(--green)' : 'var(--red)'}"${pr2 && statsView === 'all' ? ' fill-opacity="0.45"' : ''}><title>${pr2 ? 'Practice' : 'Exam'} #${offset + i + 1}${ds ? ' (' + ds + ')' : ''}: ${sc}%</title></rect>`;
     svg += `<text class="c-val" x="${cx.toFixed(1)}" y="${(y - 5).toFixed(1)}" text-anchor="middle">${sc}</text>`;
     svg += `<text class="c-lbl" x="${cx.toFixed(1)}" y="${H - pb + 17}" text-anchor="middle">#${offset + i + 1}</text>`;
   });
@@ -950,6 +1410,7 @@ function confirmResetStats() {
     'Reset', () => {
       try { localStorage.removeItem(STATS_KEY); localStorage.removeItem(HIST_KEY); } catch (e) {}
       renderStats();
+      updatePool();
     });
 }
 
@@ -1091,8 +1552,30 @@ document.getElementById('numQuestions').addEventListener('input', e => {
   const v = parseInt(e.target.value);
   if (v > 0) desiredN = v;
 });
+(function initMode() {
+  let m = 'exam';
+  try { if (localStorage.getItem(MODE_KEY) === 'practice') m = 'practice'; } catch (e) {}
+  setMode(m, true);
+})();
 buildTopicFilter();
 updateThemeIcons();
+renderResumeCard();
+window.addEventListener('pagehide', saveSession);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveSession(); });
+window.addEventListener('storage', e => {
+  if (e.key !== null && e.key !== SESSION_KEY) return;
+  if (ownsSession && !examFinished && exam.length) { if (sessionLostElsewhere()) stopStaleTab(); }
+  else if (document.getElementById('startScreen').style.display !== 'none') {
+    // Refresh the resume card, but never auto-submit here: the owning tab submits its own expiry.
+    const s = loadSession();
+    if (!s || s.mode !== 'exam' || sessionRemaining(s) > 0) renderResumeCard();
+  }
+});
+
+/* ===== OFFLINE (service worker) ===== */
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname))) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
 </script>
 </body>
 </html>
