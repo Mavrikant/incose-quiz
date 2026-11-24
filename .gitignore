@@ -1,0 +1,7 @@
+# Udemy source HTML exports (copyrighted)
+*.html
+!index.html
+!incose_exam_simulator.html
+!incose_quiz_all.html
+*_files/
+quiz_data.json
