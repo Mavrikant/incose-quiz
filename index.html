@@ -6,8 +6,10 @@
 <title>INCOSE ASEP/CSEP Practice Exam Simulator</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDEV31NZ5J"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YDEV31NZ5J');</script>
+<script>try{if(localStorage.getItem('incose_quiz_darkmode')==='1')document.documentElement.classList.add('dark');}catch(e){}</script>
 <style>
 :root {
+  --surface: #ffffff;
   --navy-900: #0f172a;
   --navy-800: #1e293b;
   --navy-700: #334155;
@@ -42,7 +44,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 .start-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--navy-900) 0%,var(--navy-800) 40%,#1a365d 100%);position:relative;overflow:hidden;}
 .start-screen::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(59,130,246,0.06);top:-200px;right:-100px;}
 .start-screen::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(59,130,246,0.04);bottom:-150px;left:-80px;}
-.start-card{background:white;border-radius:16px;padding:2.5rem 2.5rem 2rem;max-width:460px;width:92%;box-shadow:var(--shadow-xl);position:relative;z-index:1;}
+.start-card{background:var(--surface);border-radius:16px;padding:2.5rem 2.5rem 2rem;max-width:460px;width:92%;box-shadow:var(--shadow-xl);position:relative;z-index:1;}
 .start-logo{text-align:center;margin-bottom:1.5rem;}
 .start-logo h1{font-size:1.6rem;font-weight:800;color:var(--navy-900);letter-spacing:-0.5px;}
 .start-logo h1 span{color:var(--accent);}
@@ -75,16 +77,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 .btn-end{background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.3);font-size:0.82rem;padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-weight:600;transition:all var(--transition);font-family:inherit;}
 .btn-end:hover{background:var(--red);color:white;border-color:var(--red);}
 
-.q-nav{background:white;border-bottom:1px solid var(--navy-200);padding:0.6rem 1rem;display:flex;gap:4px;flex-wrap:wrap;justify-content:center;position:sticky;top:52px;z-index:99;max-height:110px;overflow-y:auto;}
-.q-dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--navy-200);display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;cursor:pointer;transition:all 0.15s;background:white;flex-shrink:0;position:relative;color:var(--navy-400);}
+.q-nav{background:var(--surface);border-bottom:1px solid var(--navy-200);padding:0.6rem 1rem;display:flex;gap:4px;flex-wrap:wrap;justify-content:center;position:sticky;top:52px;z-index:99;max-height:110px;overflow-y:auto;}
+.q-dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--navy-200);display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;cursor:pointer;transition:all 0.15s;background:var(--surface);flex-shrink:0;position:relative;color:var(--navy-400);}
 .q-dot:hover{border-color:var(--navy-400);background:var(--navy-50);}
 .q-dot.current{border-color:var(--accent);background:var(--accent);color:white;}
 .q-dot.answered{border-color:var(--green);background:var(--green-light);color:var(--green-dark);}
 .q-dot.flagged{border-color:var(--amber);}
-.q-dot.flagged::after{content:'';position:absolute;top:-2px;right:-2px;width:7px;height:7px;background:var(--amber);border-radius:50%;border:1px solid white;}
+.q-dot.flagged::after{content:'';position:absolute;top:-2px;right:-2px;width:7px;height:7px;background:var(--amber);border-radius:50%;border:1px solid var(--surface);}
 
 .question-area{max-width:780px;margin:1.5rem auto;padding:0 1rem 3rem;}
-.q-card{background:white;border-radius:var(--radius);padding:1.8rem 2rem;box-shadow:var(--shadow);}
+.q-card{background:var(--surface);border-radius:var(--radius);padding:1.8rem 2rem;box-shadow:var(--shadow);}
 .q-number{font-size:0.78rem;color:var(--navy-400);margin-bottom:0.6rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;}
 .q-body{font-size:1.05rem;margin-bottom:1.6rem;font-weight:500;color:var(--navy-900);line-height:1.7;}
 .option{display:flex;align-items:flex-start;gap:0.8rem;padding:0.85rem 1rem;margin-bottom:0.5rem;border:1.5px solid var(--navy-200);border-radius:var(--radius);cursor:pointer;transition:all 0.15s;}
@@ -118,7 +120,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 
 /* ===== CONFIRM MODAL ===== */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);backdrop-filter:blur(4px);z-index:9999;align-items:center;justify-content:center;}
-.modal-box{background:white;border-radius:14px;padding:2rem;max-width:400px;width:90%;text-align:center;box-shadow:var(--shadow-xl);animation:modalIn 0.2s ease;}
+.modal-box{background:var(--surface);border-radius:14px;padding:2rem;max-width:400px;width:90%;text-align:center;box-shadow:var(--shadow-xl);animation:modalIn 0.2s ease;}
 @keyframes modalIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
 .modal-icon{width:52px;height:52px;border-radius:50%;background:var(--amber-light);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
 .modal-icon svg{width:26px;height:26px;color:var(--amber);}
@@ -144,7 +146,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 .result-stat .stat-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;opacity:0.6;margin-top:0.1rem;}
 .result-container{max-width:780px;margin:0 auto;padding:1.5rem 1rem 3rem;}
 .result-actions{display:flex;gap:0.75rem;justify-content:center;margin-bottom:1.5rem;flex-wrap:wrap;}
-.review-card{background:white;border-radius:var(--radius);margin-bottom:0.5rem;overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--navy-200);transition:box-shadow var(--transition);}
+.review-card{background:var(--surface);border-radius:var(--radius);margin-bottom:0.5rem;overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--navy-200);transition:box-shadow var(--transition);}
 .review-card:hover{box-shadow:var(--shadow);}
 .review-header{padding:0.75rem 1rem;cursor:pointer;display:flex;align-items:flex-start;gap:0.6rem;transition:background var(--transition);}
 .review-header:hover{background:var(--navy-50);}
@@ -177,6 +179,135 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
   .nav-buttons{flex-direction:column;gap:0.8rem;}
   .nav-right{width:100%;justify-content:space-between;}
 }
+
+/* ===== ICON BUTTONS / THEME TOGGLE ===== */
+.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.08);color:#e2e8f0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--transition);padding:0;flex-shrink:0;font-family:inherit;}
+.icon-btn:hover{background:rgba(255,255,255,0.18);color:#fff;}
+.icon-btn svg{width:17px;height:17px;}
+.theme-fab{position:fixed;top:14px;right:14px;z-index:500;background:rgba(15,23,42,0.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:var(--shadow);}
+body.in-exam .theme-fab{display:none;}
+.top-bar-right{display:flex;align-items:center;gap:0.5rem;}
+.kbd-wrap{position:relative;}
+.kbd-tip{display:none;position:absolute;top:calc(100% + 10px);right:0;width:240px;max-width:calc(100vw - 24px);background:var(--surface);color:var(--navy-700);border:1px solid var(--navy-200);border-radius:10px;box-shadow:var(--shadow-lg);padding:0.8rem 0.9rem;font-size:0.8rem;z-index:200;text-align:left;}
+@media(hover:hover){.kbd-wrap:hover .kbd-tip{display:block;}}
+.kbd-wrap.open .kbd-tip{display:block;}
+.kbd-tip h4{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--navy-400);margin-bottom:0.4rem;}
+.kbd-row{display:flex;justify-content:space-between;align-items:center;gap:0.6rem;padding:0.18rem 0;}
+kbd{font-family:inherit;font-size:0.7rem;font-weight:600;background:var(--navy-100);border:1px solid var(--navy-200);border-bottom-width:2px;border-radius:4px;padding:0 0.35rem;color:var(--navy-900);}
+
+/* ===== START SCREEN EXTRAS ===== */
+.start-screen{padding:2rem 0;}
+.topic-filter{border:1.5px solid var(--navy-200);border-radius:8px;margin-bottom:1.2rem;background:var(--navy-50);}
+.topic-toggle{width:100%;display:flex;align-items:center;gap:0.5rem;padding:0.65rem 0.9rem;background:none;border:none;cursor:pointer;font-family:inherit;color:var(--navy-600);font-size:0.82rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;text-align:left;}
+.topic-summary{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:500;color:var(--navy-400);font-size:0.8rem;}
+.topic-toggle .chev{font-size:0.62rem;color:var(--navy-400);transition:transform var(--transition);}
+.topic-filter.open .chev{transform:rotate(180deg);}
+.topic-panel{display:none;padding:0 0.9rem 0.7rem;border-top:1px solid var(--navy-200);}
+.topic-filter.open .topic-panel{display:block;}
+.topic-tools{display:flex;gap:0.9rem;padding:0.55rem 0 0.35rem;}
+.link-btn{background:none;border:none;color:var(--accent);font-weight:600;font-size:0.8rem;cursor:pointer;padding:0;font-family:inherit;}
+.link-btn:hover{text-decoration:underline;}
+.topic-list{max-height:230px;overflow-y:auto;}
+.topic-item{display:flex;align-items:center;gap:0.55rem;padding:0.28rem 0;font-size:0.86rem;color:var(--navy-700);cursor:pointer;line-height:1.35;}
+.topic-item input{width:16px;height:16px;accent-color:var(--accent);flex-shrink:0;cursor:pointer;}
+.topic-item .cnt{margin-left:auto;font-size:0.75rem;color:var(--navy-400);font-variant-numeric:tabular-nums;padding-left:0.4rem;}
+.start-hint{display:none;text-align:center;font-size:0.8rem;color:var(--red);margin-top:0.5rem;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none !important;box-shadow:none;}
+.btn-primary:disabled:hover{background:var(--accent);}
+.start-secondary{display:flex;gap:0.6rem;margin-top:0.75rem;}
+.start-secondary .btn{flex:1;padding:0.6rem 0.7rem;font-size:0.85rem;}
+.start-secondary .btn svg{width:15px;height:15px;flex-shrink:0;}
+
+/* ===== STATS / BROWSE PAGES ===== */
+.page-screen{display:none;min-height:100vh;background:var(--navy-100);}
+.page-header{background:linear-gradient(145deg,#0f172a 0%,#1e293b 40%,#1a365d 100%);color:#fff;padding:1.2rem 1rem 1.4rem;}
+.page-header-inner{max-width:780px;margin:0 auto;display:flex;align-items:center;gap:0.8rem;padding-right:48px;}
+.page-header h1{font-size:1.25rem;font-weight:700;letter-spacing:-0.3px;line-height:1.3;}
+.page-header p{font-size:0.82rem;opacity:0.7;}
+.page-body{max-width:780px;margin:0 auto;padding:1.5rem 1rem 3rem;}
+.stat-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem;}
+.stat-tile{background:var(--surface);border-radius:var(--radius);padding:1rem 0.6rem;box-shadow:var(--shadow-sm);border:1px solid var(--navy-200);text-align:center;}
+.stat-tile .val{font-size:1.6rem;font-weight:800;color:var(--navy-900);line-height:1.2;font-variant-numeric:tabular-nums;}
+.stat-tile .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--navy-400);font-weight:600;margin-top:0.2rem;}
+.panel{background:var(--surface);border-radius:var(--radius);padding:1.2rem 1.3rem;box-shadow:var(--shadow-sm);border:1px solid var(--navy-200);margin-bottom:1rem;}
+.panel h2{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--navy-600);font-weight:700;margin-bottom:0.9rem;}
+.panel-note{font-size:0.78rem;color:var(--navy-400);margin:-0.5rem 0 0.9rem;}
+.chart-svg{width:100%;max-width:520px;height:auto;display:block;margin:0 auto;}
+.chart-svg .c-grid{stroke:var(--navy-200);stroke-width:1;}
+.chart-svg .c-lbl{fill:var(--navy-400);font-size:12px;}
+.chart-svg .c-val{fill:var(--navy-700);font-size:11px;font-weight:700;}
+.chart-svg .c-pass{stroke:var(--amber);stroke-width:1.5;stroke-dasharray:5 4;}
+.chart-svg .c-passlbl{fill:var(--amber);font-size:12px;font-weight:700;}
+.weak-row{margin-bottom:0.75rem;}
+.weak-row:last-child{margin-bottom:0;}
+.weak-top{display:flex;justify-content:space-between;align-items:baseline;gap:0.6rem;font-size:0.86rem;color:var(--navy-700);margin-bottom:0.3rem;}
+.weak-top .pct{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:0.8rem;}
+.weak-top .pct small{font-weight:500;color:var(--navy-400);}
+.weak-bar{height:8px;background:var(--navy-100);border-radius:4px;overflow:hidden;}
+.weak-bar span{display:block;height:100%;border-radius:4px;}
+.empty-state{text-align:center;padding:2.5rem 1rem;color:var(--navy-600);}
+.empty-state svg{width:44px;height:44px;color:var(--navy-300);margin-bottom:0.6rem;}
+.empty-state h3{font-size:1rem;color:var(--navy-900);margin-bottom:0.3rem;}
+.empty-state p{font-size:0.88rem;}
+.stats-actions{display:flex;justify-content:center;gap:0.75rem;margin-top:1.2rem;flex-wrap:wrap;}
+.browse-controls{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:0.6rem;}
+.browse-controls input,.browse-controls select{padding:0.6rem 0.85rem;border:1.5px solid var(--navy-200);border-radius:8px;font-size:0.92rem;background:var(--surface);color:var(--navy-900);font-family:inherit;outline:none;min-width:0;transition:border-color var(--transition),box-shadow var(--transition);}
+.browse-controls input:focus,.browse-controls select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.12);}
+.browse-controls input{flex:2 1 220px;}
+.browse-controls select{flex:1 1 170px;}
+.browse-count{font-size:0.8rem;color:var(--navy-600);margin-bottom:0.8rem;}
+.topic-badge{display:inline-block;font-size:0.68rem;font-weight:600;background:var(--accent-light);color:var(--accent-dark);padding:0.05rem 0.5rem;border-radius:10px;margin-left:0.35rem;white-space:nowrap;vertical-align:1px;line-height:1.5;}
+.bq-num{font-weight:700;color:var(--navy-400);margin-right:0.3rem;}
+.browse-list .review-detail{padding:0 1rem 1rem 1rem;}
+
+@media(max-width:600px){
+  .top-bar{gap:0.5rem;}
+  .top-bar-right{gap:0.35rem;}
+  .icon-btn{width:30px;height:30px;}
+  .btn-end{padding:0.4rem 0.65rem;}
+  .stat-tile .val{font-size:1.25rem;}
+  .panel{padding:1rem;}
+  .start-secondary{flex-direction:column;}
+  .theme-fab{top:10px;right:10px;}
+}
+
+/* ===== DARK MODE ===== */
+html.dark{color-scheme:dark;
+  --surface:#111b2e;
+  --navy-900:#e6edf7;
+  --navy-700:#cbd5e1;
+  --navy-600:#a3b1c6;
+  --navy-400:#8191a9;
+  --navy-300:#4b5d78;
+  --navy-200:#27364c;
+  --navy-100:#0b1220;
+  --navy-50:#16223a;
+  --accent-light:rgba(59,130,246,0.2);
+  --accent-dark:#93c5fd;
+  --green-light:rgba(34,197,94,0.16);
+  --green-dark:#4ade80;
+  --red-light:rgba(239,68,68,0.17);
+  --red-dark:#fca5a5;
+  --amber-light:rgba(245,158,11,0.18);
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.4);
+  --shadow:0 4px 12px rgba(0,0,0,0.35);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.45);
+  --shadow-xl:0 24px 60px rgba(0,0,0,0.55);
+}
+html.dark body{background:var(--navy-100);}
+html.dark .start-screen,html.dark .result-header,html.dark .page-header{background:linear-gradient(145deg,#020617 0%,#0b1220 45%,#11284a 100%);}
+html.dark .top-bar{background:#020617;border-bottom:1px solid #1e293b;}
+html.dark .top-bar-left{color:#94a3b8;}
+html.dark .btn-primary:hover{background:#2563eb;}
+html.dark .btn-danger:hover{background:#dc2626;}
+html.dark .btn-outline:hover{background:var(--navy-50);border-color:var(--navy-400);}
+html.dark .explanation-box{background:rgba(255,255,255,0.04);}
+html.dark .q-dot.current{color:#fff;}
+html.dark .flag-btn.flagged{color:#1c1300;}
+html.dark .modal-overlay{background:rgba(2,6,23,0.72);}
+html.dark .review-opt .r-exp{color:var(--navy-600);}
+html.dark .start-card{border:1px solid var(--navy-200);}
+html.dark .theme-fab{background:rgba(30,41,59,0.75);}
 </style>
 </head>
 <body>
@@ -189,12 +320,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
       <p>Practice Knowledge Exam Simulator</p>
       <div class="start-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        475 questions available
+        <span><span id="availCount">475</span> <span id="availWord">questions</span> available</span>
       </div>
     </div>
     <div class="form-group">
-      <label>Number of Questions</label>
+      <label for="numQuestions">Number of Questions</label>
       <input type="number" id="numQuestions" value="100" min="10" max="475" step="5">
+    </div>
+    <div class="topic-filter" id="topicFilter">
+      <button type="button" class="topic-toggle" onclick="toggleTopicPanel()" aria-expanded="false" aria-controls="topicPanel">
+        <span>Filter by Topic</span>
+        <span class="topic-summary" id="topicSummary">All topics</span>
+        <span class="chev">&#9660;</span>
+      </button>
+      <div class="topic-panel" id="topicPanel">
+        <div class="topic-tools">
+          <button type="button" class="link-btn" onclick="setAllTopics(true)">Select all</button>
+          <button type="button" class="link-btn" onclick="setAllTopics(false)">None</button>
+        </div>
+        <div class="topic-list" id="topicList"></div>
+      </div>
     </div>
     <div class="form-group">
       <label>Time Limit (minutes)</label>
@@ -207,10 +352,63 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
         <option value="sequential">Sequential</option>
       </select>
     </div>
-    <button class="btn btn-primary btn-start" onclick="startExam()">
+    <button class="btn btn-primary btn-start" id="startBtn" onclick="startExam()">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       Start Exam
     </button>
+    <p class="start-hint" id="startHint">No questions match the selected topics. Select at least one topic to start.</p>
+    <div class="start-secondary">
+      <button type="button" class="btn btn-outline" onclick="showStats()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Statistics
+      </button>
+      <button type="button" class="btn btn-outline" onclick="showBrowse()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Browse All Questions
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- THEME TOGGLE (start / stats / browse / results) -->
+<button type="button" class="icon-btn theme-btn theme-fab" id="themeToggle" onclick="toggleDark()" aria-label="Toggle dark mode"></button>
+
+<!-- STATS SCREEN -->
+<div class="page-screen" id="statsScreen">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <button type="button" class="icon-btn" onclick="showScreen('startScreen')" aria-label="Back to start" title="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div><h1>Statistics</h1><p>Your progress across all completed exams</p></div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div id="statsContent"></div>
+    <div class="stats-actions">
+      <button type="button" class="btn btn-outline" onclick="showScreen('startScreen')">&#8592; Back</button>
+      <button type="button" class="btn btn-danger" id="resetStatsBtn" onclick="confirmResetStats()">Reset Statistics</button>
+    </div>
+  </div>
+</div>
+
+<!-- BROWSE SCREEN -->
+<div class="page-screen" id="browseScreen">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <button type="button" class="icon-btn" onclick="showScreen('startScreen')" aria-label="Back to start" title="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div><h1>Browse Questions</h1><p>Search the full question bank with answers and explanations</p></div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="browse-controls">
+      <input type="search" id="browseSearch" placeholder="Search questions and answers..." oninput="onBrowseSearch()" aria-label="Search questions">
+      <select id="browseTopic" onchange="renderBrowse()" aria-label="Filter by topic"><option value="">All topics</option></select>
+    </div>
+    <div class="browse-count" id="browseCount"></div>
+    <div class="browse-list" id="browseList"></div>
   </div>
 </div>
 
@@ -221,7 +419,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
       <span id="progressText"><strong>1</strong> / 100</span>
     </div>
     <span class="timer" id="timer">01:40:00</span>
-    <button class="btn-end" onclick="finishExam()">End Exam</button>
+    <div class="top-bar-right">
+      <div class="kbd-wrap" id="kbdWrap">
+        <button type="button" class="icon-btn" onclick="toggleKbdTip(event)" aria-label="Keyboard shortcuts" aria-controls="kbdTip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6.01" y2="10"/><line x1="10" y1="10" x2="10.01" y2="10"/><line x1="14" y1="10" x2="14.01" y2="10"/><line x1="18" y1="10" x2="18.01" y2="10"/><line x1="7" y1="14" x2="17" y2="14"/></svg>
+        </button>
+        <div class="kbd-tip" id="kbdTip" role="tooltip">
+          <h4>Keyboard Shortcuts</h4>
+          <div class="kbd-row"><span>Select answer</span><span><kbd>1</kbd>-<kbd>4</kbd> / <kbd>A</kbd>-<kbd>D</kbd></span></div>
+          <div class="kbd-row"><span>Previous</span><span><kbd>&#8592;</kbd> / <kbd>J</kbd></span></div>
+          <div class="kbd-row"><span>Next</span><span><kbd>&#8594;</kbd> / <kbd>K</kbd></span></div>
+          <div class="kbd-row"><span>Flag question</span><span><kbd>F</kbd></span></div>
+          <div class="kbd-row"><span>Close dialog</span><span><kbd>Esc</kbd></span></div>
+        </div>
+      </div>
+      <button type="button" class="icon-btn theme-btn" onclick="toggleDark()" aria-label="Toggle dark mode"></button>
+      <button class="btn-end" onclick="finishExam()">End Exam</button>
+    </div>
   </div>
   <div class="q-nav" id="qNav"></div>
   <div class="question-area">
@@ -258,6 +472,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
   </div>
 </div>
 
+<!-- GENERIC CONFIRM MODAL -->
+<div class="modal-overlay" id="appConfirmModal" role="dialog" aria-modal="true" aria-labelledby="appConfirmTitle">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="modal-title" id="appConfirmTitle"></div>
+    <p class="modal-msg" id="appConfirmMsg"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-outline" onclick="closeAppConfirm()">Cancel</button>
+      <button type="button" class="btn btn-danger" id="appConfirmOk" onclick="runAppConfirm()">OK</button>
+    </div>
+  </div>
+</div>
+
 <!-- RESULT SCREEN -->
 <div class="result-screen" id="resultScreen">
   <div class="result-header">
@@ -288,20 +517,134 @@ const letters = ['A','B','C','D','E','F'];
 let exam = [], userAnswers = [], flags = [];
 let currentQ = 0, timerInterval, startTime, timeLimit;
 
+let examFinished = false;
+const HIST_KEY = 'incose_quiz_history', STATS_KEY = 'incose_quiz_stats', DARK_KEY = 'incose_quiz_darkmode';
+
+/* ===== STORAGE (all access guarded) ===== */
+function readJSON(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
+}
+function writeJSON(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+}
+function loadHistory() {
+  const h = readJSON(HIST_KEY, {});
+  return (h && typeof h === 'object' && !Array.isArray(h)) ? h : {};
+}
+function loadStats() {
+  const s = readJSON(STATS_KEY, []);
+  return Array.isArray(s) ? s.filter(x => x && typeof x === 'object') : [];
+}
+
+/* ===== TOPICS ===== */
+const TOPIC_MAP = {
+  '1.1': 'Introduction to SE', '1.2': 'SE & Other Disciplines', '1.3': 'Systems Fundamentals', '1.4': 'SE Foundations',
+  '2.1': 'Life Cycle Models', '2.2': 'Life Cycle Processes Overview', '2.3': 'Life Cycle Processes',
+  '3.1': 'Specialty Engineering', '3.2': 'Systems of Systems',
+  '4.1': 'Product & Service Systems', '4.2': 'Enterprise SE', '4.3': 'SoS Engineering', '4.4': 'Agile SE'
+};
+const TOPIC_ORDER = [...Object.values(TOPIC_MAP), 'Enabling SE', 'General'];
+function deriveTopic(q) {
+  const re = /section\s+(\d+)\.(\d+)/i;
+  for (const a of (q.answers || [])) {
+    const m = re.exec((a && a.explanation) || '');
+    if (m) return m[1] === '5' ? 'Enabling SE' : (TOPIC_MAP[m[1] + '.' + m[2]] || 'General');
+  }
+  return 'General';
+}
+const Q_TOPICS = ALL_QUESTIONS.map(deriveTopic);
+const TOPIC_COUNTS = {};
+Q_TOPICS.forEach(t => { TOPIC_COUNTS[t] = (TOPIC_COUNTS[t] || 0) + 1; });
+const TOPICS = TOPIC_ORDER.filter(t => TOPIC_COUNTS[t]);
+let selectedTopics = new Set(TOPICS);
+let desiredN = 100;
+
+function buildTopicFilter() {
+  document.getElementById('topicList').innerHTML = TOPICS.map((t, i) =>
+    `<label class="topic-item"><input type="checkbox" data-topic="${i}" checked onchange="onTopicChange(this)"><span>${escH(t)}</span><span class="cnt">${TOPIC_COUNTS[t]}</span></label>`
+  ).join('');
+  updatePool();
+}
+function onTopicChange(cb) {
+  const t = TOPICS[+cb.dataset.topic];
+  if (cb.checked) selectedTopics.add(t); else selectedTopics.delete(t);
+  updatePool();
+}
+function setAllTopics(on) {
+  selectedTopics = new Set(on ? TOPICS : []);
+  document.querySelectorAll('#topicList input').forEach(cb => { cb.checked = on; });
+  updatePool();
+}
+function toggleTopicPanel() {
+  const f = document.getElementById('topicFilter');
+  const open = f.classList.toggle('open');
+  f.querySelector('.topic-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function filteredPool() {
+  const p = [];
+  for (let i = 0; i < ALL_QUESTIONS.length; i++) if (selectedTopics.has(Q_TOPICS[i])) p.push(i);
+  return p;
+}
+function updatePool() {
+  const n = filteredPool().length;
+  document.getElementById('availCount').textContent = n;
+  document.getElementById('availWord').textContent = n === 1 ? 'question' : 'questions';
+  const inp = document.getElementById('numQuestions');
+  inp.max = Math.max(1, n);
+  inp.min = Math.min(10, Math.max(1, n));
+  if (n > 0) inp.value = Math.min(desiredN, n);
+  document.getElementById('startBtn').disabled = n === 0;
+  document.getElementById('startHint').style.display = n === 0 ? 'block' : 'none';
+  document.getElementById('topicSummary').textContent =
+    selectedTopics.size === TOPICS.length ? 'All topics' : `${selectedTopics.size} of ${TOPICS.length} selected`;
+}
+
+/* ===== SPACED REPETITION ===== */
+function qWeight(h) {
+  const c = (h && +h.c) || 0, w = (h && +h.w) || 0;
+  return Math.max(0.2, 1 + 2 * w + (h ? 0 : 1) - 0.5 * c);
+}
+// Weighted sampling without replacement (Efraimidis-Spirakis keys), then shuffled
+function weightedSample(idxs, n) {
+  const hist = loadHistory();
+  const picked = idxs
+    .map(i => ({ i, k: Math.pow(Math.random(), 1 / qWeight(hist[i])) }))
+    .sort((a, b) => b.k - a.k)
+    .slice(0, n)
+    .map(o => o.i);
+  for (let j = picked.length - 1; j > 0; j--) {
+    const r = Math.floor(Math.random() * (j + 1));
+    [picked[j], picked[r]] = [picked[r], picked[j]];
+  }
+  return picked;
+}
+
+/* ===== SCREENS ===== */
+function showScreen(id) {
+  ['startScreen', 'statsScreen', 'browseScreen'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? (s === 'startScreen' ? 'flex' : 'block') : 'none';
+  });
+  window.scrollTo(0, 0);
+}
+
 function startExam() {
-  const n = Math.min(parseInt(document.getElementById('numQuestions').value) || 80, ALL_QUESTIONS.length);
+  const poolIdx = filteredPool();
+  if (!poolIdx.length) { updatePool(); return; }
+  const n = Math.max(1, Math.min(parseInt(document.getElementById('numQuestions').value) || 80, poolIdx.length));
   timeLimit = (parseInt(document.getElementById('timeLimit').value) || 90) * 60;
   const order = document.getElementById('orderSelect').value;
 
-  let pool = ALL_QUESTIONS.map((q,i) => ({...q, origIdx: i}));
-  if (order === 'random') pool.sort(() => Math.random() - 0.5);
-  exam = pool.slice(0, n);
+  const chosen = order === 'random' ? weightedSample(poolIdx, n) : poolIdx.slice(0, n);
+  exam = chosen.map(i => ({ ...ALL_QUESTIONS[i], origIdx: i, topic: Q_TOPICS[i] }));
   userAnswers = new Array(n).fill(-1);
   flags = new Array(n).fill(false);
   currentQ = 0;
+  examFinished = false;
 
-  document.getElementById('startScreen').style.display = 'none';
+  ['startScreen', 'statsScreen', 'browseScreen'].forEach(s => { document.getElementById(s).style.display = 'none'; });
+  document.body.classList.add('in-exam');
   document.getElementById('examScreen').style.display = 'block';
+  window.scrollTo(0, 0);
 
   buildNav();
   renderQ();
@@ -387,7 +730,7 @@ function updateTimer() {
   const el = document.getElementById('timer');
   el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
   el.className = 'timer' + (remaining < 300 ? ' danger' : remaining < 600 ? ' warning' : '');
-  if (remaining <= 0) finishExam();
+  if (remaining <= 0) { closeConfirmModal(); doFinishExam(); }
 }
 
 function closeConfirmModal() {
@@ -410,8 +753,12 @@ function finishExam() {
 }
 
 function doFinishExam() {
+  if (examFinished) return;
+  examFinished = true;
   clearInterval(timerInterval);
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  closeKbdTip();
+  document.body.classList.remove('in-exam');
+  const elapsed = Math.min(Math.floor((Date.now() - startTime) / 1000), timeLimit);
 
   let correct = 0, wrong = 0, skipped = 0;
   exam.forEach((q, i) => {
@@ -437,7 +784,28 @@ function doFinishExam() {
   const em = Math.floor(elapsed/60), es = elapsed%60;
   document.getElementById('rTime').textContent = `${String(em).padStart(2,'0')}:${String(es).padStart(2,'0')}`;
 
+  recordResults(correct, wrong, skipped, pct, elapsed);
   buildReview();
+  window.scrollTo(0, 0);
+}
+
+function recordResults(correct, wrong, skipped, pct, elapsed) {
+  const hist = loadHistory();
+  const topics = {};
+  exam.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (ua < 0) return; // skipped questions are not counted
+    const ok = !!(q.answers[ua] && q.answers[ua].correct);
+    const prev = hist[q.origIdx] || {};
+    hist[q.origIdx] = { c: (+prev.c || 0) + (ok ? 1 : 0), w: (+prev.w || 0) + (ok ? 0 : 1) };
+    const t = topics[q.topic] || (topics[q.topic] = { c: 0, t: 0 });
+    t.t++;
+    if (ok) t.c++;
+  });
+  writeJSON(HIST_KEY, hist);
+  const stats = loadStats();
+  stats.push({ date: new Date().toISOString(), score: pct, correct, wrong, skipped, totalQ: exam.length, timeUsed: elapsed, topics });
+  writeJSON(STATS_KEY, stats);
 }
 
 function buildReview() {
@@ -465,7 +833,7 @@ function buildReview() {
     card.innerHTML = `
       <div class="review-header" onclick="this.closest('.review-card').classList.toggle('open')">
         <div class="review-icon ${icon}">${iconText}</div>
-        <div class="review-body"><strong>${i+1}.</strong> ${escH(q.question)}</div>
+        <div class="review-body"><strong>${i+1}.</strong> ${escH(q.question)} <span class="topic-badge">${escH(q.topic || Q_TOPICS[q.origIdx] || 'General')}</span></div>
         <span class="toggle-rv">&#9660;</span>
       </div>
       <div class="review-detail">${detailHtml}</div>`;
@@ -482,6 +850,249 @@ function escH(s) {
   d.textContent = s;
   return d.innerHTML;
 }
+
+/* ===== GENERIC CONFIRM MODAL ===== */
+let appConfirmAction = null;
+function showAppConfirm(title, msg, okLabel, onOk) {
+  document.getElementById('appConfirmTitle').textContent = title;
+  document.getElementById('appConfirmMsg').textContent = msg;
+  document.getElementById('appConfirmOk').textContent = okLabel || 'OK';
+  appConfirmAction = onOk;
+  document.getElementById('appConfirmModal').style.display = 'flex';
+}
+function closeAppConfirm() {
+  document.getElementById('appConfirmModal').style.display = 'none';
+  appConfirmAction = null;
+}
+function runAppConfirm() {
+  const fn = appConfirmAction;
+  closeAppConfirm();
+  if (fn) fn();
+}
+
+/* ===== STATISTICS ===== */
+function showStats() {
+  renderStats();
+  showScreen('statsScreen');
+}
+function renderStats() {
+  const s = loadStats();
+  const el = document.getElementById('statsContent');
+  if (!s.length) {
+    el.innerHTML = `<div class="panel empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <h3>No exams yet</h3>
+      <p>Complete an exam to see your scores and weakest topics here.</p></div>`;
+    return;
+  }
+  const scores = s.map(x => Math.max(0, Math.min(100, +x.score || 0)));
+  const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+  const best = Math.max(...scores);
+  const last = s.slice(-10);
+  const offset = s.length - last.length;
+
+  // Aggregate topic performance across all exams
+  const agg = {};
+  s.forEach(x => {
+    const tp = x.topics || {};
+    Object.keys(tp).forEach(k => {
+      const a = agg[k] || (agg[k] = { c: 0, t: 0 });
+      a.c += +(tp[k] && tp[k].c) || 0;
+      a.t += +(tp[k] && tp[k].t) || 0;
+    });
+  });
+  const rows = Object.keys(agg).filter(k => agg[k].t >= 1).map(k => {
+    const a = agg[k], w = Math.max(0, a.t - a.c);
+    return { k, t: a.t, w, r: w / a.t };
+  }).sort((a, b) => b.r - a.r || b.t - a.t);
+
+  const weakHtml = rows.length ? rows.map(r => {
+    const p = Math.round(r.r * 100);
+    const col = r.r >= 0.5 ? 'var(--red)' : r.r >= 0.3 ? 'var(--amber)' : 'var(--green)';
+    return `<div class="weak-row"><div class="weak-top"><span>${escH(r.k)}</span><span class="pct" style="color:${col}">${p}% wrong <small>(${r.w}/${r.t})</small></span></div>
+      <div class="weak-bar"><span style="width:${Math.max(p, 1)}%;background:${col}"></span></div></div>`;
+  }).join('') : '<p class="panel-note" style="margin:0">No answered questions recorded yet.</p>';
+
+  el.innerHTML = `
+    <div class="stat-tiles">
+      <div class="stat-tile"><div class="val">${s.length}</div><div class="lbl">Exams</div></div>
+      <div class="stat-tile"><div class="val" style="color:${avg >= 70 ? 'var(--green)' : 'var(--red)'}">${avg}%</div><div class="lbl">Average</div></div>
+      <div class="stat-tile"><div class="val" style="color:${best >= 70 ? 'var(--green)' : 'var(--red)'}">${best}%</div><div class="lbl">Best</div></div>
+    </div>
+    <div class="panel"><h2>Last ${last.length} Exam${last.length > 1 ? 's' : ''}</h2>${buildScoreChart(last, offset)}</div>
+    <div class="panel"><h2>Weak Topics</h2><p class="panel-note">Sorted by error rate across all exams (skipped questions excluded)</p>${weakHtml}</div>`;
+}
+function buildScoreChart(list, offset) {
+  const W = 420, H = 210, pl = 38, pr = 10, pt = 20, pb = 28;
+  const cw = W - pl - pr, ch = H - pt - pb;
+  const slot = cw / 10, bw = Math.min(26, slot * 0.62);
+  const yOf = v => pt + ch * (1 - v / 100);
+  let svg = `<svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Scores of the last ${list.length} exams">`;
+  [0, 50, 100].forEach(v => {
+    svg += `<line class="c-grid" x1="${pl}" x2="${W - pr}" y1="${yOf(v)}" y2="${yOf(v)}"/><text class="c-lbl" x="${pl - 6}" y="${yOf(v) + 4}" text-anchor="end">${v}%</text>`;
+  });
+  list.forEach((x, i) => {
+    const sc = Math.max(0, Math.min(100, +x.score || 0));
+    const h = Math.max(ch * sc / 100, 2);
+    const cx = pl + slot * i + slot / 2, y = pt + ch - h;
+    const d = new Date(x.date);
+    const ds = isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    svg += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${sc >= 70 ? 'var(--green)' : 'var(--red)'}"><title>Exam #${offset + i + 1}${ds ? ' (' + ds + ')' : ''}: ${sc}%</title></rect>`;
+    svg += `<text class="c-val" x="${cx.toFixed(1)}" y="${(y - 5).toFixed(1)}" text-anchor="middle">${sc}</text>`;
+    svg += `<text class="c-lbl" x="${cx.toFixed(1)}" y="${H - pb + 17}" text-anchor="middle">#${offset + i + 1}</text>`;
+  });
+  svg += `<line class="c-pass" x1="${pl}" x2="${W - pr}" y1="${yOf(70)}" y2="${yOf(70)}"/><text class="c-passlbl" x="${pl - 6}" y="${yOf(70) + 4}" text-anchor="end">70%</text>`;
+  return svg + '</svg>';
+}
+function confirmResetStats() {
+  showAppConfirm('Reset Statistics?',
+    'This deletes all saved exam results and spaced-repetition progress in this browser. This cannot be undone.',
+    'Reset', () => {
+      try { localStorage.removeItem(STATS_KEY); localStorage.removeItem(HIST_KEY); } catch (e) {}
+      renderStats();
+    });
+}
+
+/* ===== BROWSE / SEARCH ===== */
+let browseInit = false, browseTimer = null;
+const searchCache = [];
+function showBrowse() {
+  if (!browseInit) {
+    document.getElementById('browseTopic').innerHTML = '<option value="">All topics</option>' +
+      TOPICS.map(t => `<option value="${escH(t)}">${escH(t)} (${TOPIC_COUNTS[t]})</option>`).join('');
+    document.getElementById('browseList').addEventListener('click', e => {
+      const h = e.target.closest('.review-header');
+      if (h) toggleBrowseCard(h.closest('.review-card'));
+    });
+    browseInit = true;
+  }
+  renderBrowse();
+  showScreen('browseScreen');
+}
+function searchText(i) {
+  if (searchCache[i] === undefined) {
+    const q = ALL_QUESTIONS[i];
+    searchCache[i] = ((q.question || '') + ' ' + (q.answers || []).map(a => a.text || '').join(' ')).toLowerCase();
+  }
+  return searchCache[i];
+}
+function onBrowseSearch() {
+  clearTimeout(browseTimer);
+  browseTimer = setTimeout(renderBrowse, 200);
+}
+function renderBrowse() {
+  const term = document.getElementById('browseSearch').value.trim().toLowerCase();
+  const topic = document.getElementById('browseTopic').value;
+  const res = [];
+  for (let i = 0; i < ALL_QUESTIONS.length; i++) {
+    if (topic && Q_TOPICS[i] !== topic) continue;
+    if (term && !searchText(i).includes(term)) continue;
+    res.push(i);
+  }
+  document.getElementById('browseCount').textContent =
+    `${res.length} of ${ALL_QUESTIONS.length} question${ALL_QUESTIONS.length === 1 ? '' : 's'}`;
+  const list = document.getElementById('browseList');
+  if (!res.length) {
+    list.innerHTML = '<div class="panel empty-state"><h3>No matching questions</h3><p>Try a different search term or topic.</p></div>';
+    return;
+  }
+  list.innerHTML = res.map(i => `<div class="review-card" data-idx="${i}">
+      <div class="review-header" role="button" tabindex="0" aria-expanded="false">
+        <div class="review-body"><span class="bq-num">Q${i + 1}.</span>${escH(ALL_QUESTIONS[i].question)} <span class="topic-badge">${escH(Q_TOPICS[i])}</span></div>
+        <span class="toggle-rv">&#9660;</span>
+      </div></div>`).join('');
+}
+function toggleBrowseCard(card) {
+  if (!card) return;
+  if (!card.querySelector('.review-detail')) {
+    const q = ALL_QUESTIONS[+card.dataset.idx];
+    const d = document.createElement('div');
+    d.className = 'review-detail';
+    d.innerHTML = (q.answers || []).map((a, j) => {
+      const exp = a.explanation ? `<div class="r-exp">${escH(a.explanation)}</div>` : '';
+      return `<div class="review-opt${a.correct ? ' r-correct' : ''}">${letters[j]}) ${escH(a.text)}${a.correct ? ' &#10003;' : ''}${exp}</div>`;
+    }).join('');
+    card.appendChild(d);
+  }
+  const open = card.classList.toggle('open');
+  const h = card.querySelector('.review-header');
+  if (h) h.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+/* ===== KEYBOARD SHORTCUTS ===== */
+function toggleKbdTip(e) {
+  if (e) e.stopPropagation();
+  document.getElementById('kbdWrap').classList.toggle('open');
+}
+function closeKbdTip() {
+  const w = document.getElementById('kbdWrap');
+  if (w) w.classList.remove('open');
+}
+function anyModalOpen() {
+  return Array.from(document.querySelectorAll('.modal-overlay')).some(m => m.style.display === 'flex');
+}
+document.addEventListener('click', e => {
+  const w = document.getElementById('kbdWrap');
+  if (w && !w.contains(e.target)) w.classList.remove('open');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('confirmModal').style.display === 'flex') closeConfirmModal();
+    if (document.getElementById('appConfirmModal').style.display === 'flex') closeAppConfirm();
+    closeKbdTip();
+    return;
+  }
+  const t = e.target;
+  // Browse cards: Enter/Space toggles
+  if ((e.key === 'Enter' || e.key === ' ') && t && t.classList && t.classList.contains('review-header') && t.closest('#browseList')) {
+    e.preventDefault();
+    toggleBrowseCard(t.closest('.review-card'));
+    return;
+  }
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (document.getElementById('examScreen').style.display !== 'block' || examFinished) return;
+  if (anyModalOpen()) return;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  const k = (e.key || '').toLowerCase();
+  let idx = -1;
+  if (/^[1-4]$/.test(k)) idx = +k - 1;
+  else if (/^[a-d]$/.test(k)) idx = k.charCodeAt(0) - 97;
+  if (idx >= 0) {
+    if (exam[currentQ] && idx < exam[currentQ].answers.length) { e.preventDefault(); selectAnswer(idx); }
+    return;
+  }
+  if (k === 'arrowleft' || k === 'j') { e.preventDefault(); goTo(currentQ - 1); }
+  else if (k === 'arrowright' || k === 'k') { e.preventDefault(); goTo(currentQ + 1); }
+  else if (k === 'f') { e.preventDefault(); toggleFlag(); }
+});
+
+/* ===== DARK MODE ===== */
+const ICON_MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+const ICON_SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="3.5"/><line x1="12" y1="20.5" x2="12" y2="22.5"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1.5" y1="12" x2="3.5" y2="12"/><line x1="20.5" y1="12" x2="22.5" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+function isDark() { return document.documentElement.classList.contains('dark'); }
+function updateThemeIcons() {
+  const dark = isDark();
+  document.querySelectorAll('.theme-btn').forEach(b => {
+    b.innerHTML = dark ? ICON_SUN : ICON_MOON;
+    const label = dark ? 'Switch to light mode' : 'Switch to dark mode';
+    b.setAttribute('aria-label', label);
+    b.title = label;
+  });
+}
+function toggleDark() {
+  const on = !isDark();
+  document.documentElement.classList.toggle('dark', on);
+  try { localStorage.setItem(DARK_KEY, on ? '1' : '0'); } catch (e) {}
+  updateThemeIcons();
+}
+
+/* ===== INIT ===== */
+document.getElementById('numQuestions').addEventListener('input', e => {
+  const v = parseInt(e.target.value);
+  if (v > 0) desiredN = v;
+});
+buildTopicFilter();
+updateThemeIcons();
 </script>
 </body>
 </html>

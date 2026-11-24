@@ -12,6 +12,12 @@ Interactive practice exam simulator for the INCOSE Associate Systems Engineering
 - Navigation grid to jump between questions
 - Instant scoring with pass/fail (70% threshold)
 - Detailed answer review with explanations referencing the SE Handbook
+- Topic filter based on SE Handbook sections
+- Spaced repetition: questions you miss come back more often in random mode
+- Statistics dashboard with score history and weak topics (stored locally in your browser)
+- Browse and search all questions with answers and explanations
+- Keyboard shortcuts (1–4 / A–D to answer, ← → or J/K to navigate, F to flag)
+- Dark mode
 
 ## Usage
 
